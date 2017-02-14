@@ -1,0 +1,16 @@
+间隔时间股票变化
+def tick_change(tick,interval)
+间隔时间上升或下降
+def tick_up(tick,interval)
+获取积分，变化为正则返回1分
+def tick_point(change)
+更新缓存中的当前总积分,point为变化的积分
+def update_tick_point(tick,point)
+获取缓存中的总积分
+def getTickPoint(tick)
+设置缓存中的总积分
+def setTickPoint(tick)
+循环更新总积分
+def update_tick_for(tick,interval)
+多线程循环更新今天所以股票总积分
+def update_tick_today_for()

@@ -65,7 +65,7 @@ def update_tick_point(tick,point):
 def update_tick_for(tick,interval):
     update_tick_point(tick, tick_up(tick,interval))
     print('for', tick, Tick_Point[tick])
-    ws_send(tick+'%f' % Tick_Point[tick])
+    ws_send(tick+'|'+'%d' % Tick_Point[tick])
     update_tick_for(tick,interval)
 
 def update_tick_today_for():
@@ -81,7 +81,7 @@ def update_tick_today_for():
         # thread.start_new_thread(update_tick_for,(tick, 2))
         # update_tick_for(tick, 2)
 
-        t = threading.Thread(target=update_tick_for, name='LoopThread',args=(tick, 2))
+        t = threading.Thread(target=update_tick_for, name='LoopThread',args=(tick, 10))
         t.start()
 
         # t.join()
@@ -179,7 +179,7 @@ def ws_send(message):
 def tickWsMain():
     if __name__ == "__main__":
         websocket.enableTrace(True)
-        ws = websocket.WebSocketApp("ws://localhost:2017/",
+        ws = websocket.WebSocketApp("ws://ytlala.cc:2017/",
                                   on_message = on_ws_message,
                                   on_error = on_ws_error,
                                   on_close = on_ws_close)

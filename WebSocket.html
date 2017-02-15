@@ -7,7 +7,7 @@
     <script>
 // 创建一个Socket实例
 //var socket = new WebSocket('wss://localhost:4430');
-var socket = new WebSocket('ws://localhost:2017');
+var socket = new WebSocket('ws://ytlala.cc:2017');
 
 // 打开Socket
 socket.onopen = function(event) {
@@ -18,7 +18,11 @@ socket.onopen = function(event) {
   // 监听消息
   socket.onmessage = function(event) {
     console.log('Client received a message',event);
-    $('div').html(event.data);
+    $('#new').html(event.data);
+    var data = event.data;
+    var arr = data.split("|");
+    $('#detail').html(arr[0]);
+
   };
 
   // 监听Socket的关闭
@@ -31,7 +35,8 @@ socket.onopen = function(event) {
 };
     </script>
 </head>
-    <div></div>
+    <div id="new"></div>
+    <div id="detail"></div>
 <body>
 
 </body>

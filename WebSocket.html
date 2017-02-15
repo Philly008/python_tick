@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket客户端，只用于接受消息展示页面，不用于发消息</title>
+    <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+    <script>
+// 创建一个Socket实例
+//var socket = new WebSocket('wss://localhost:4430');
+var socket = new WebSocket('ws://localhost:2017');
+
+// 打开Socket
+socket.onopen = function(event) {
+
+  // 发送一个初始化消息
+  socket.send('I am the client and I\'m listening!');
+
+  // 监听消息
+  socket.onmessage = function(event) {
+    console.log('Client received a message',event);
+    $('div').html(event.data);
+  };
+
+  // 监听Socket的关闭
+  socket.onclose = function(event) {
+    console.log('Client notified socket has closed',event);
+  };
+
+  // 关闭Socket....
+  //socket.close()
+};
+    </script>
+</head>
+    <div></div>
+<body>
+
+</body>
+</html>

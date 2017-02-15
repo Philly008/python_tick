@@ -14,3 +14,5 @@ def setTickPoint(tick)
 def update_tick_for(tick,interval)
 多线程循环更新今天所以股票总积分
 def update_tick_today_for()
+短时websocket测试
+def shortWs()

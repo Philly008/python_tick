@@ -8,7 +8,8 @@
 // 创建一个Socket实例
 //var socket = new WebSocket('wss://localhost:4430');
 var socket = new WebSocket('ws://ytlala.cc:2017');
-
+var tickSet = new Set();
+var count = 0;
 // 打开Socket
 socket.onopen = function(event) {
 
@@ -17,11 +18,18 @@ socket.onopen = function(event) {
 
   // 监听消息
   socket.onmessage = function(event) {
-    console.log('Client received a message',event);
-    $('#new').html(event.data);
+//    console.log('Client received a message',event);
+    $('#new').html(event.data+'次数：'+count++);
     var data = event.data;
     var arr = data.split("|");
-    $('#detail').html(arr[0]);
+//    $('#detail').html(arr[0]);
+      if(tickSet.has(arr[0])){
+          $('#'+arr[0]).html(arr[1]);
+      }else{
+          tickSet.add(arr[0]);
+          $('#detail').append('<p>'+arr[0]+'-<span id="'+arr[0]+'" >'+arr[1]+'</span></p>');
+      }
+
 
   };
 

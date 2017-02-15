@@ -81,7 +81,7 @@ def update_tick_today_for():
         # thread.start_new_thread(update_tick_for,(tick, 2))
         # update_tick_for(tick, 2)
 
-        t = threading.Thread(target=update_tick_for, name='LoopThread',args=(tick, 10))
+        t = threading.Thread(target=update_tick_for, name='LoopThread',args=(tick, 20))
         t.start()
 
         # t.join()

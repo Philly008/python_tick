@@ -5,55 +5,6 @@ import thread
 import websocket
 from websocket import create_connection
 
-# ws = create_connection("ws://echo.websocket.org/")
-#Short-lived one-off send-receive
-#This is if you want to communicate a short message and disconnect immediately when done.
-# ws = create_connection("ws://localhost:2017/")
-# print "Sending 'Hello, World'..."
-# ws.send("Hello, World")
-def shortWs():
-    ws = create_connection("ws://localhost:2017/")
-    print "Sending 'Hello, World'..."
-    ws.send("Hello, World")
-
-def on_message(ws, message):
-    print message
-
-def on_error(ws, error):
-    print error
-
-def on_close(ws):
-    print "### closed ###"
-
-def ws_main(ws):
-    ws.send("main start...")
-
-
-
-# def on_open(ws):
-#     def run(*args):
-#         for i in range(3):
-#             time.sleep(1)
-#             ws.send("Hello %d" % i)
-#         time.sleep(1)
-#         ws.close()
-#         print "thread terminating..."
-#     thread.start_new_thread(run, ())
-
-# Long-lived connection
-# This example is similar to how WebSocket code looks in browsers using JavaScript.
-if __name__ == "__main__":
-    websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://localhost:2017/",
-                              on_message = on_message,
-                              on_error = on_error,
-                              on_close = on_close)
-    # ws.on_open = on_open
-    ws.on_open = ws_main
-    ws.run_forever()
-
-
-
 # print(ts.__version__)
 #ts.get_k_data('600000', ktype='W', autype='hfq')
 
@@ -114,6 +65,7 @@ def update_tick_point(tick,point):
 def update_tick_for(tick,interval):
     update_tick_point(tick, tick_up(tick,interval))
     print('for', tick, Tick_Point[tick])
+    ws_send(tick+'%f' % Tick_Point[tick])
     update_tick_for(tick,interval)
 
 def update_tick_today_for():
@@ -166,3 +118,76 @@ def update_tick_today_for():
 # t.start()
 # t.join()
 # print 'thread %s ended.' % threading.current_thread().name
+
+
+
+# ws = create_connection("ws://echo.websocket.org/")
+#Short-lived one-off send-receive
+#This is if you want to communicate a short message and disconnect immediately when done.
+# ws = create_connection("ws://localhost:2017/")
+# print "Sending 'Hello, World'..."
+# ws.send("Hello, World")
+def shortWs():
+    ws = create_connection("ws://localhost:2017/")
+    print "Sending 'Hello, World'..."
+    ws.send("Hello, World")
+
+def on_ws_message(ws, message):
+    print message
+
+def on_ws_error(ws, error):
+    print error
+
+def on_ws_close(ws):
+    print "### closed ###"
+
+
+def tickSendThead():
+    update_tick_today_for()
+
+
+
+def ws_main(ws):
+    ws.send("main start...")
+    thread.start_new_thread(tickSendThead, ())
+
+wsTick={}
+
+def getWs():
+    return wsTick['tick']
+
+def initWs(webSocket):
+    wsTick['tick']=webSocket
+
+def ws_send(message):
+    ws = getWs()
+    ws.send(message)
+
+
+# def on_open(ws):
+#     def run(*args):
+#         for i in range(3):
+#             time.sleep(1)
+#             ws.send("Hello %d" % i)
+#         time.sleep(1)
+#         ws.close()
+#         print "thread terminating..."
+#     thread.start_new_thread(ws_send, ())
+
+# Long-lived connection
+# This example is similar to how WebSocket code looks in browsers using JavaScript.
+def tickWsMain():
+    if __name__ == "__main__":
+        websocket.enableTrace(True)
+        ws = websocket.WebSocketApp("ws://localhost:2017/",
+                                  on_message = on_ws_message,
+                                  on_error = on_ws_error,
+                                  on_close = on_ws_close)
+        # ws.on_open = on_open
+        ws.on_open = ws_main
+        initWs(ws)
+        # ws_send(123)
+        ws.run_forever()#still run not other till close or thread.start_new_thread
+
+
+tickWsMain()

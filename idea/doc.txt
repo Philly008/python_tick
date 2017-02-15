@@ -16,3 +16,13 @@ def update_tick_for(tick,interval)
 def update_tick_today_for()
 短时websocket测试
 def shortWs()
+websocket客户端
+def tickWsMain()
+监听ws请求
+def on_ws_message(ws, message)
+监听ws错误
+def on_ws_error(ws, error)
+监听ws关闭
+def on_ws_close(ws)
+监听ws开启
+def ws_main(ws)

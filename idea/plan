@@ -9,6 +9,14 @@
 使用map进行保存（dict）
 */
 2.0
+－－新增websocket客户端请求
+/*
+python ws客户端用户创建消息，其他网页客户端用于请求消息展示
+将python ws客户端请求发送到node ws服务,
+其他网页（ws客户端，如静态网页WebSocket.html）请求node ws服务获取数据
+*/
+
+====plan===
 －－mongo存储
 －－调用node
 
